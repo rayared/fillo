@@ -1,0 +1,52 @@
+created:
+    - database/factories/BanklistFactory.php
+    - database/factories/BusinesstypeFactory.php
+    - database/factories/CurrenciesFactory.php
+    - database/factories/OfficesFactory.php
+    - database/factories/BudgetFactory.php
+    - database/factories/CategoryFactory.php
+    - database/factories/OfficesettingsFactory.php
+    - database/factories/PrtypeFactory.php
+    - database/factories/PersensFactory.php
+    - database/factories/WalletsFactory.php
+    - database/factories/UserbanksFactory.php
+    - database/factories/TransactionsFactory.php
+    - database/migrations/2025_01_23_063655_create_banklists_table.php
+    - database/migrations/2025_01_23_063656_create_businesstypes_table.php
+    - database/migrations/2025_01_23_063657_create_currencies_table.php
+    - database/migrations/2025_01_23_063658_create_offices_table.php
+    - database/migrations/2025_01_23_063659_create_budgets_table.php
+    - database/migrations/2025_01_23_063700_create_categories_table.php
+    - database/migrations/2025_01_23_063701_create_officesettings_table.php
+    - database/migrations/2025_01_23_063702_create_prtypes_table.php
+    - database/migrations/2025_01_23_063703_create_persens_table.php
+    - database/migrations/2025_01_23_063704_create_wallets_table.php
+    - database/migrations/2025_01_23_063705_create_userbanks_table.php
+    - database/migrations/2025_01_23_063706_create_transactions_table.php
+    - app/Models/Banklist.php
+    - app/Models/Businesstype.php
+    - app/Models/Currencies.php
+    - app/Models/Offices.php
+    - app/Models/Budget.php
+    - app/Models/Category.php
+    - app/Models/Officesettings.php
+    - app/Models/Prtype.php
+    - app/Models/Persens.php
+    - app/Models/Wallets.php
+    - app/Models/Userbanks.php
+    - app/Models/Transactions.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, remember_token: 'string:100 nullable default:NULL' }
+    Banklist: { bankname: string, bankimg: string, status: boolian, softdeletes: softDeletes, timestamps: timestamps }
+    Businesstype: { businesstitle: string, softdeletes: softDeletes, timestamps: timestamps }
+    Category: { name: 'string:100', relationships: { belongsTo: Category, hasMany: Category }, softdeletes: softDeletes, timestamps: timestamps }
+    Currencies: { name: string, symbol: string, iso: string, status: int, softdeletes: softDeletes, timestamps: timestamps }
+    Offices: { officename: string, startfinancedate: 'timestamp nullable', user_id: 'foreignId constrained:users onDelete:cascade', office_id: 'foreignId nullable constrained:offices onDelete:set null', currencies_id: 'foreignId constrained:currencies onDelete:cascade', softdeletes: softDeletes, timestamps: timestamps }
+    Budget: { budgettitel: string, budgetpersent: integer, amount: decimal, office_id: 'foreignId constrained:offices onDelete:cascade', relationships: { belongsTo: offices }, softdeletes: softDeletes, timestamps: timestamps }
+    Widget: { id: id, softdeletes: softDeletes, timestamps: timestamps }
+    Officesettings: { key: string, value: string, office_id: 'foreignId constrained:offices onDelete:cascade', softdeletes: softDeletes, timestamps: timestamps }
+    Prtype: { name: string, softdeletes: softDeletes, timestamps: timestamps }
+    Persens: { name: string, lastname: string, phone: string, phone2: string, phone3: string, email: string, address: string, user_id: 'foreignId constrained:users onDelete:cascade', prtype_id: 'foreignId constrained:prtype onDelete:restrict', softdeletes: softDeletes, timestamps: timestamps }
+    Wallets: { type: string, balance: decimal, office_id: 'foreignId constrained:offices onDelete:cascade', softdeletes: softDeletes, timestamps: timestamps }
+    Userbanks: { codehesab: string, sh_hesab: string, sh_card: string, sh_sheba: string, type: string, has_check: boolean, balance: decimal, office_id: 'foreignId constrained:offices onDelete:cascade', banklist_id: 'foreignId constrained:banklists onDelete:restrict', softdeletes: softDeletes, timestamps: timestamps }
+    Transactions: { type: string, dateandtime: timestamp, amount: decimal, sourcetype: integer, sourceid: unsignedBigInteger, desttype: integer, destid: unsignedBigInteger, office_id: 'foreignId constrained:offices onDelete:cascade', category_id: 'foreignId constrained:categories onDelete:restrict', softdeletes: softDeletes, timestamps: timestamps }

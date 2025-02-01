@@ -1,0 +1,107 @@
+models:
+  Banklist:
+    bankname: string
+    bankimg: string
+    status: boolian
+    softDeletes
+    timestamps
+    
+  Businesstype:
+    businesstitle: string
+    softDeletes
+    timestamps
+
+  Currencies:
+    name: string
+    symbol: string
+    iso: string
+    status: int
+    softDeletes
+    timestamps
+
+  Offices:
+    officename: string
+    startfinancedate: timestamp nullable
+    user_id: foreignId constrained:users onDelete:cascade
+    office_id: foreignId nullable constrained:offices onDelete:set null
+    currencies_id: foreignId constrained:currencies onDelete:cascade
+    softDeletes
+    timestamps
+
+  Budget:
+    budgettitel: string
+    budgetpersent: integer
+    amount: decimal
+    office_id: foreignId constrained:offices onDelete:cascade
+    relationships:
+      belongsTo: offices
+    softDeletes
+    timestamps
+
+  Category:
+    name: string:100
+    relationships:
+      belongsTo:
+         Category
+      hasMany:
+         Category
+    softDeletes
+    timestamps
+
+  Officesettings:
+    key: string
+    value: string
+    office_id: foreignId constrained:offices onDelete:cascade
+    softDeletes
+    timestamps
+
+  Prtype:
+    name: string
+    softDeletes
+    timestamps
+
+  Persens:
+    name: string
+    lastname: string
+    phone: string
+    phone2: string
+    phone3: string
+    email: string
+    address: string
+    user_id: foreignId constrained:users onDelete:cascade
+    prtype_id: foreignId constrained:prtype onDelete:restrict
+    softDeletes
+    timestamps
+
+  Wallets:
+    type: string
+    balance: decimal
+    office_id: foreignId constrained:offices onDelete:cascade
+    softDeletes
+    timestamps
+
+  Userbanks:
+    codehesab: string
+    sh_hesab: string
+    sh_card: string
+    sh_sheba: string
+    type: string
+    has_check: boolean
+    balance: decimal
+    office_id: foreignId constrained:offices onDelete:cascade
+    banklist_id: foreignId constrained:banklists onDelete:restrict
+    softDeletes
+    timestamps
+
+  Transactions:
+    type: string
+    dateandtime: timestamp
+    amount: decimal
+    sourcetype: integer
+    sourceid: unsignedBigInteger
+    desttype: integer
+    destid: unsignedBigInteger
+    office_id: foreignId constrained:offices onDelete:cascade
+    category_id: foreignId constrained:categories onDelete:restrict
+    softDeletes
+    timestamps
